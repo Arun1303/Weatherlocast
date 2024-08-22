@@ -9,10 +9,10 @@
 
 @implementation WeatherDetails
 
-- (void)fetchWeatherForCity:(NSString *)cityName completion:(void (^)(NSDictionary *weatherData, NSError *error))completion {
+- (void)fetchWeatherForCity:(double)latitude longitude:(double)longitude completion:(void (^)(NSDictionary *weatherData, NSError *error))completion {
     // Replace with your actual API key
     static NSString * const APIKey = @"1f37ee5a68107b58b975454d55c1cac1";
-    NSString *urlString = [NSString stringWithFormat:@"https://api.openweathermap.org/data/2.5/weather?q=%@&appid=%@", cityName, APIKey];
+    NSString *urlString = [NSString stringWithFormat:@"https://api.openweathermap.org/data/3.0/onecall?lat=%f&lon=%f&appid=%@", latitude, longitude, APIKey];
     NSURL *url = [NSURL URLWithString:urlString];
     
     NSURLSession *session = [NSURLSession sharedSession];

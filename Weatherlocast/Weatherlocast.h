@@ -19,7 +19,7 @@ FOUNDATION_EXPORT const unsigned char WeatherlocastVersionString[];
 @interface WeatherDetails : NSObject
 
 // Public method to fetch weather details for a city
-- (void)fetchWeatherForCity:(NSString *)cityName completion:(void (^)(NSDictionary *weatherData, NSError *error))completion;
+- (void)fetchWeatherForCity:(double)latitude longitude:(double)longitude  completion:(void (^)(NSDictionary *weatherData, NSError *error))completion;
 
 @end
 
