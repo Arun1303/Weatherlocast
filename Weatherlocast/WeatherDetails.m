@@ -5,7 +5,7 @@
 //  Created by Arun V on 21/08/24.
 //
 
-#import "WeatherDetails.h"
+#import "Weatherlocast.h"
 
 @implementation WeatherDetails
 
