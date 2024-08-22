@@ -7,27 +7,40 @@
 
 #import "WeatherDetails.h"
 
-
-static NSString * const APIKey = @"1f37ee5a68107b58b975454d55c1cac1"; // Replace with your API key
-static NSString * const BaseURL = @"https://api.openweathermap.org/data/2.5/weather";
-
-
 @implementation WeatherDetails
 
-- (void)fetchWeatherForCity:(NSString *)city completion:(void (^)(NSDictionary * _Nullable weatherData, NSError * _Nullable error))completion {
-    NSString *urlString = [NSString stringWithFormat:@"%@?q=%@&appid=%@", BaseURL, city, APIKey];
+- (void)fetchWeatherForCity:(NSString *)cityName completion:(void (^)(NSDictionary *weatherData, NSError *error))completion {
+    // Replace with your actual API key
+    static NSString * const APIKey = @"1f37ee5a68107b58b975454d55c1cac1";
+    NSString *urlString = [NSString stringWithFormat:@"https://api.openweathermap.org/data/2.5/weather?q=%@&appid=%@", cityName, APIKey];
     NSURL *url = [NSURL URLWithString:urlString];
-    NSURLSessionDataTask *task = [[NSURLSession sharedSession] dataTaskWithURL:url completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+    
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSURLSessionDataTask *task = [session dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         if (error) {
-            completion(nil, error);
+            if (completion) {
+                completion(nil, error);
+            }
             return;
         }
         
-        NSDictionary *weatherData = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-        completion(weatherData, nil);
+        NSError *jsonError;
+        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
+        
+        if (jsonError) {
+            if (completion) {
+                completion(nil, jsonError);
+            }
+            return;
+        }
+        
+        // Call completion block with weather data
+        if (completion) {
+            completion(json, nil);
+        }
     }];
+    
     [task resume];
 }
-
 
 @end

@@ -13,6 +13,13 @@ FOUNDATION_EXPORT double WeatherlocastVersionNumber;
 //! Project version string for Weatherlocast.
 FOUNDATION_EXPORT const unsigned char WeatherlocastVersionString[];
 
-// In this header, you should import all the public headers of your framework using statements like #import <Weatherlocast/PublicHeader.h>
-#import <Weatherlocast/WeatherDetails.h>
+// In this header, you should import all the public headers of your framework using statements like
+//#import <Weatherlocast/WeatherDetails.h>
+
+@interface WeatherDetails : NSObject
+
+// Public method to fetch weather details for a city
+- (void)fetchWeatherForCity:(NSString *)cityName completion:(void (^)(NSDictionary *weatherData, NSError *error))completion;
+
+@end
 
